@@ -22,7 +22,7 @@ class Entry(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name_plural = 'entties'
+        verbose_name_plural = 'entries'
 
     def __unicode__(self):
         """返回模型的字符串表示"""
