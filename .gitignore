@@ -1,0 +1,35 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Database
+db.sqlite3
+db.sqlite3-journal
+*.db
+
+# Virtual environments
+ll_env/
+venv/
+env/
+.env
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Django
+*.log
+local_settings.py
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Others
+*.bak
+*.tmp
