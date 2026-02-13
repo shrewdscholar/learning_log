@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from .models import Topic
-from .forms import TopicForm
+from .forms import TopicForm, EntryForm
 # Create your views here.
 def index(request):
     """学习笔记的主页"""
