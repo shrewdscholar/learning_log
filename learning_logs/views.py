@@ -18,7 +18,7 @@ def topics(request):
 
 def topic(request):
     """Show a single topic and all its entries"""
-    topic = Topic.object.sget(id = topic_id)
+    topic = Topic.objects.get(id = topic_id)
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -33,7 +33,7 @@ def new_topic(request):
         form = TopicForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResonseRedirect(reverse('learning_logs:topic'))
+            return HttpResponseRedirect(reverse('learning_logs:topics'))
     
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
