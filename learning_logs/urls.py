@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^topics/(?P<topic_id>\d+)/new_entry/$', views.new_entry, name='new_entry'),
 
     # Edit entry
-    url(r'^topics/(?P<topic_id>\d+)/(?P<entry_id>\d+)/$', views.edit_entry, name = 'edit_entry'),
+    url(r'^edit_entry/(?P<entry_id>\d+)/$', views.edit_entry, name = 'edit_entry'),
 ]
