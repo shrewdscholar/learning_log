@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from .models import Topic
+from .models import Topic, Entry
 from django import forms
 
 class TopicForm(forms.ModelForm):
@@ -9,3 +9,10 @@ class TopicForm(forms.ModelForm):
         model = Topic
         fields = ['text']
         labels = {'text': ''}
+
+class EntryForm(forms.ModelFoem):
+    class Meta:
+        model = Entry
+        fields = ['text']
+        labels = {'text': ''}
+        widgets = {'text': forms.Textarea(attrs={'cols': 80})}
