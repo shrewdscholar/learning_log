@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 from .models import Topic
+from django import forms
 
 class TopicForm(forms.ModelForm):
     class Meta:
