@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Topic, Entry
@@ -22,6 +22,9 @@ def topics(request):
 def topic(request,topic_id):
     """Show a single topic and all its entries"""
     topic = Topic.objects.get(id = topic_id)
+    # Verify that the requested topic belongs to the current user
+    if topic.owner != request.user:
+        raise Http404
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -67,6 +70,8 @@ def edit_entry(request,entry_id):
     """Edit your entry"""
     entry = Entry.objects.get(id = entry_id)
     topic = entry.topic
+    if topic.owner != request.user:
+        raise Http404
     if request.method != 'POST':
         # pre-populate form with existing entry
         form = EntryForm(instance = entry)
