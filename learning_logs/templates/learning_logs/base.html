@@ -1,6 +1,11 @@
 <p>
   <a href="{% url 'learning_logs:index' %}">Learning Log</a>
   <a href="{% url 'learning_logs:topics' %}">Topics</a>
+  {% if uesr.is_authenticated %}
+    hello, {{ uesr.uesrname }}
+  {% else %}
+    <a href="{% url 'uesrs:login' %}">log in</a>
+  {% endif %}
 </p>
 
 {% block content %}{% endblock content %}
