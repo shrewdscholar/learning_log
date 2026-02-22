@@ -23,8 +23,7 @@ def topic(request,topic_id):
     """Show a single topic and all its entries"""
     topic = Topic.objects.get(id = topic_id)
     # Verify that the requested topic belongs to the current user
-    if topic.owner != request.user:
-        raise Http404
+    check_topic_owner(request,topic)
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -53,6 +52,7 @@ def new_entry(request,topic_id):
     print("接收到的 topic_id 是:", topic_id)  # ← 加这行
     print("topic_id 的类型是:", type(topic_id))  # ← 加这行
     topic = Topic.objects.get(id = topic_id)
+    check_topic_owner(request,topic)
     if request.method != 'POST':
         # Unsubmitted data: create a new form
         form = EntryForm()
@@ -72,8 +72,7 @@ def edit_entry(request,entry_id):
     """Edit your entry"""
     entry = Entry.objects.get(id = entry_id)
     topic = entry.topic
-    if topic.owner != request.user:
-        raise Http404
+    check_topic_owner(request,topic)
     if request.method != 'POST':
         # pre-populate form with existing entry
         form = EntryForm(instance = entry)
@@ -85,3 +84,8 @@ def edit_entry(request,entry_id):
             return HttpResponseRedirect(reverse('learning_logs:topic',args = [topic.id]))
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+def check_topic_owner(request,topic):
+    """Check if the logged-in user is associated with the topic """
+    if topic.owner != request.user:
+        raise Http404
