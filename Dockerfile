@@ -1,6 +1,11 @@
 # 使用 Python 2.7 官方镜像
 FROM python:2.7-slim
 
+# 安装 bash 和基础工具（解决终端问题）
+RUN apt-get update && apt-get install -y \
+    bash \
+    && rm -rf /var/lib/apt/lists/*
+    
 # 设置工作目录
 WORKDIR /app
 
