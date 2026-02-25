@@ -8,21 +8,12 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=learning_log.settings
 
-# 安装系统依赖（如果需要）
-RUN apt-get update && apt-get install -y \
-    gcc \
-    --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/*
-
-# 先复制 requirements.txt 安装依赖
+# 直接安装 Python 依赖（不安装系统包）
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制项目所有文件
 COPY . .
-
-# 收集静态文件（如果 Django 有静态文件）
-RUN python manage.py collectstatic --noinput || true
 
 # 暴露端口
 EXPOSE 8080
