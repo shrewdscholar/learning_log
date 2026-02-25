@@ -26,6 +26,7 @@ SECRET_KEY = '+b(#8#3$$6-dmgocw^mf0m&cvi_rl!#cqtscyv@fnfa7imffe^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# 支持所有主机头
 ALLOWED_HOSTS = ['*']
 
 
@@ -134,3 +135,19 @@ LOGIN_URL = '/users/login'
 BOOTSTRAP3 = {
     'include_jquery': True,
 }
+
+# zeabur设置
+if os.getcwd() == '/app':
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default='postgres://localhost')
+    }
+
+# 让request.is_secure()承认X-Forwarded-Proto头
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# 静态资产配置
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
