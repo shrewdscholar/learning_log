@@ -15,8 +15,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 复制项目所有文件
 COPY . .
 
+# 给脚本执行权限
+RUN chmod +x boot.sh
+
 # 暴露端口
 EXPOSE 8080
 
 # 启动命令
-CMD gunicorn learning_log.wsgi:application --bind 0.0.0.0:8080
+CMD ["./boot.sh"]
