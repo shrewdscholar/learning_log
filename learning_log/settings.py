@@ -27,7 +27,7 @@ SECRET_KEY = '+b(#8#3$$6-dmgocw^mf0m&cvi_rl!#cqtscyv@fnfa7imffe^'
 DEBUG = False
 
 # 支持所有主机头
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

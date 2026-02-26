@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
+from django.shortcuts import render, get_object_or_404
 # Create your views here.
 def index(request):
     """学习笔记的主页"""
@@ -21,7 +22,7 @@ def topics(request):
 @login_required
 def topic(request,topic_id):
     """Show a single topic and all its entries"""
-    topic = Topic.objects.get(id = topic_id)
+    topic = get_object_or_404(Topic, id = topic_id)
     # Verify that the requested topic belongs to the current user
     check_topic_owner(request,topic)
     entries = topic.entry_set.order_by('-date_added')
@@ -51,7 +52,7 @@ def new_entry(request,topic_id):
     """Create a new entry"""
     print("接收到的 topic_id 是:", topic_id)  # ← 加这行
     print("topic_id 的类型是:", type(topic_id))  # ← 加这行
-    topic = Topic.objects.get(id = topic_id)
+    topic = get_object_or_404(Topic, id = topic_id)
     check_topic_owner(request,topic)
     if request.method != 'POST':
         # Unsubmitted data: create a new form
@@ -70,7 +71,7 @@ def new_entry(request,topic_id):
 @login_required
 def edit_entry(request,entry_id):
     """Edit your entry"""
-    entry = Entry.objects.get(id = entry_id)
+    entry = get_object_or_404(Entry, id = entry_id)
     topic = entry.topic
     check_topic_owner(request,topic)
     if request.method != 'POST':
