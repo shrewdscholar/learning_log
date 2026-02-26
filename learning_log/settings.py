@@ -27,7 +27,7 @@ SECRET_KEY = '+b(#8#3$$6-dmgocw^mf0m&cvi_rl!#cqtscyv@fnfa7imffe^'
 DEBUG = False
 
 # 支持所有主机头
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -63,7 +63,7 @@ ROOT_URLCONF = 'learning_log.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'learning_log/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
