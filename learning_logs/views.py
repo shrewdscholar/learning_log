@@ -7,15 +7,19 @@ from django.contrib.auth.decorators import login_required
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 # Create your views here.
 def index(request):
     """学习笔记的主页"""
     return render(request, 'learning_logs/index.html')
 
-@login_required
 def topics(request):
     """Show all of the topics"""
-    topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+    if request.user.is_authenticated:
+        topics = Topic.objects.filter(Q(owner=request.user) | Q(public=True)).order_by('date_added')
+    else:
+        topics = Topic.objects.filter(public=True).order_by('-date_added')
+
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
 
